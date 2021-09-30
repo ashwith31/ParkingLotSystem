@@ -1,22 +1,26 @@
 package com.parkinglotsystem;
 
 public class ParkingLotSystem {
+    private Object vechile;
 
-    private Object vehicle;
-
-    public boolean park(Object vehicle){
-        if (this.vehicle != null)
-            return false;
-        this.vehicle = vehicle;
-        return true;
+    public void park(Object vechile) throws ParkingLotException {
+        if (this.vechile != null)
+            throw new ParkingLotException("Parking Lot Is Full");
+        this.vechile = vechile;
     }
 
-    public boolean unPark(Object vehicle) {
-        if (vehicle == null) return false;
-        if (this.vehicle.equals(vehicle)) {
-            this.vehicle = null;
-            return true;
-        }
-        return false;
+    public boolean isVechileParked(Object vechile) {
+        return this.vechile.equals(vechile);
+    }
+
+    public void unPark(Object vechile) throws ParkingLotException {
+        if (this.vechile == null)
+            throw new ParkingLotException("Unpark Is Not Possible");
+        if (this.vechile.equals(vechile))
+            this.vechile = null;
+    }
+
+    public boolean isVechileUnParked(Object vechile) {
+        return this.vechile == null;
     }
 }

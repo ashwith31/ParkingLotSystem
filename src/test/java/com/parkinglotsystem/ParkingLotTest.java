@@ -3,39 +3,59 @@ package com.parkinglotsystem;
 import org.junit.jupiter.api.*;
 
 public class ParkingLotTest{
-    Object vehicle = null;
+    Object vechile;
     ParkingLotSystem parkingLotSystem;
 
     @BeforeEach
     void setUp() {
-        vehicle = new Object();
+        vechile = new Object();
         parkingLotSystem = new ParkingLotSystem();
     }
-
     @Test
     void givenAVechicle_WhenParked_ShouldReturnTrue() {
-        boolean isParked = parkingLotSystem.park(new Object());
-        Assertions.assertTrue(isParked);
+        try {
+            parkingLotSystem.park(vechile);
+            boolean isparked = parkingLotSystem.isVechileParked(vechile);
+            Assertions.assertTrue(isparked);
+        } catch (ParkingLotException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
-    public void givenAVehicle_WhenUnParked_ShouldReturnTrue(){
-        parkingLotSystem.park(vehicle);
-        boolean isUnParked = parkingLotSystem.unPark(vehicle);
-        Assertions.assertTrue(isUnParked);
+    void givenAVechile_WhenUnparked_ShouldReturnTrue() {
+        try {
+            parkingLotSystem.park(vechile);
+            boolean park = parkingLotSystem.isVechileParked(vechile);
+            parkingLotSystem.unPark(vechile);
+            boolean unPark = parkingLotSystem.isVechileUnParked(vechile);
+            Assertions.assertEquals(park,unPark);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test
-    public void givenAVehicle_WhenAlreadyParked_ShouldReturnFalse(){
-        parkingLotSystem.park(vehicle);
-        boolean isParked = parkingLotSystem.park(new Object());
-        Assertions.assertFalse(isParked);
+    void givenAVechile_WhenAlreadyParked_Should_ReturnFalse() {
+        try {
+            parkingLotSystem.park(vechile);
+            parkingLotSystem.park(new Object());
+        } catch (ParkingLotException e) {
+            Assertions.assertEquals("Parking Lot Is Full",e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Test
-    void givenNoVechicle_WhenUnParked_ShouldReturntFalse() {
-        boolean isParked = parkingLotSystem.unPark(null);
-        Assertions.assertFalse(isParked);
+    void givenAVechile_WhenNotParked_ShouldNotBeUnparked() {
+        try {
+            parkingLotSystem.unPark(vechile);
+            parkingLotSystem.isVechileUnParked(vechile);
+        }catch(ParkingLotException e){
+            Assertions.assertEquals("Unpark Is Not Possible",e.getMessage());
+            e.printStackTrace();
+        }
     }
-
 }
+
