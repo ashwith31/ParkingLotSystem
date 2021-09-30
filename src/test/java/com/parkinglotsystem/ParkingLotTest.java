@@ -57,5 +57,18 @@ public class ParkingLotTest{
             e.printStackTrace();
         }
     }
+
+    @Test
+    void givenParkingLot_WhenFull_ShouldReturnTrue() throws ParkingLotException {
+        parkingLotSystem.park(vechile);
+        boolean check = parkingLotSystem.isFull();
+        Assertions.assertTrue(check);
+    }
+
+    @Test
+    void givenParkingLot_WhenNotFull_ShouldReturnFalse() throws ParkingLotException {
+        boolean check = parkingLotSystem.isFull();
+        Assertions.assertFalse(check);
+    }
 }
 

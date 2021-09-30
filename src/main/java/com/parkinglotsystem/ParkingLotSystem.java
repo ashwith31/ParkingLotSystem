@@ -23,4 +23,8 @@ public class ParkingLotSystem {
     public boolean isVechileUnParked(Object vechile) {
         return this.vechile == null;
     }
+
+    public boolean isFull() {
+        return this.vechile != null;
+    }
 }
