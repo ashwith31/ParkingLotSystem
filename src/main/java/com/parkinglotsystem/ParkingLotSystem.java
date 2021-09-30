@@ -2,7 +2,21 @@ package com.parkinglotsystem;
 
 public class ParkingLotSystem {
 
-    public boolean park(Object vechile){
-        return true;
+    private Object vehicle;
+
+    public boolean park(Object vehicle){
+        if (this.vehicle == null) {
+            this.vehicle = vehicle;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean unPark(Object vehicle) {
+        if (this.vehicle.equals(vehicle)) {
+            this.vehicle = null;
+            return true;
+        }
+        return false;
     }
 }
