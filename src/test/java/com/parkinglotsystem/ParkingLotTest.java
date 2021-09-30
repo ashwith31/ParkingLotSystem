@@ -3,12 +3,12 @@ package com.parkinglotsystem;
 import org.junit.jupiter.api.*;
 
 public class ParkingLotTest{
-    Object vechile;
+    Object vehicle = null;
     ParkingLotSystem parkingLotSystem;
 
     @BeforeEach
     void setUp() {
-        vechile = new Object();
+        vehicle = new Object();
         parkingLotSystem = new ParkingLotSystem();
     }
 
@@ -20,8 +20,6 @@ public class ParkingLotTest{
 
     @Test
     public void givenAVehicle_WhenUnParked_ShouldReturnTrue(){
-        ParkingLotSystem parkingLotSystem = new ParkingLotSystem();
-        Object vehicle = new Object();
         parkingLotSystem.park(vehicle);
         boolean isUnParked = parkingLotSystem.unPark(vehicle);
         Assertions.assertTrue(isUnParked);
@@ -29,9 +27,14 @@ public class ParkingLotTest{
 
     @Test
     public void givenAVehicle_WhenAlreadyParked_ShouldReturnFalse(){
-        Object vehicle = new Object();
         parkingLotSystem.park(vehicle);
         boolean isParked = parkingLotSystem.park(new Object());
+        Assertions.assertFalse(isParked);
+    }
+
+    @Test
+    void givenNoVechicle_WhenUnParked_ShouldReturntFalse() {
+        boolean isParked = parkingLotSystem.unPark(null);
         Assertions.assertFalse(isParked);
     }
 
