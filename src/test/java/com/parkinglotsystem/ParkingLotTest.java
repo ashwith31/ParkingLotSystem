@@ -2,15 +2,16 @@ package com.parkinglotsystem;
 
 import org.junit.jupiter.api.*;
 
-public class ParkingLotTest{
+public class ParkingLotTest {
     Object vechile;
     ParkingLotSystem parkingLotSystem;
 
     @BeforeEach
     void setUp() {
         vechile = new Object();
-        parkingLotSystem = new ParkingLotSystem();
+        parkingLotSystem = new ParkingLotSystem(1);
     }
+
     @Test
     void givenAVechicle_WhenParked_ShouldReturnTrue() {
         try {
@@ -29,7 +30,7 @@ public class ParkingLotTest{
             boolean park = parkingLotSystem.isVechileParked(vechile);
             parkingLotSystem.unPark(vechile);
             boolean unPark = parkingLotSystem.isVechileUnParked(vechile);
-            Assertions.assertEquals(park,unPark);
+            Assertions.assertEquals(park, unPark);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,7 +43,7 @@ public class ParkingLotTest{
             parkingLotSystem.park(vechile);
             parkingLotSystem.park(new Object());
         } catch (ParkingLotException e) {
-            Assertions.assertEquals("Parking Lot Is Full",e.getMessage());
+            Assertions.assertEquals("Parking Lot Is Full", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -52,8 +53,8 @@ public class ParkingLotTest{
         try {
             parkingLotSystem.unPark(vechile);
             parkingLotSystem.isVechileUnParked(vechile);
-        }catch(ParkingLotException e){
-            Assertions.assertEquals("Unpark Is Not Possible",e.getMessage());
+        } catch (ParkingLotException e) {
+            Assertions.assertEquals("Unpark Is Not Possible", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -69,6 +70,18 @@ public class ParkingLotTest{
     void givenParkingLot_WhenNotFull_ShouldReturnFalse() throws ParkingLotException {
         boolean check = parkingLotSystem.isFull();
         Assertions.assertFalse(check);
+    }
+
+    @Test
+    void givenWhenParkingLotIsFull_ShouldInformTheOwner(){
+        ParkingLotOwner owner = new ParkingLotOwner();
+        parkingLotSystem.registerOwner(owner);
+        try {
+            parkingLotSystem.park(vechile);
+            parkingLotSystem.park(new Object());
+        } catch (ParkingLotException e) {        }
+        boolean capacityFull = owner.isCapacityFull();
+        Assertions.assertTrue(capacityFull);
     }
 }
 
