@@ -24,20 +24,6 @@ public class ParkingLotTest {
     }
 
     @Test
-    void givenAVechile_WhenUnparked_ShouldReturnTrue() {
-        try {
-            parkingLotSystem.park(vechile);
-            boolean park = parkingLotSystem.isVechileParked(vechile);
-            parkingLotSystem.unPark(vechile);
-            boolean unPark = parkingLotSystem.isVechileUnParked(vechile);
-            Assertions.assertEquals(park, unPark);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Test
     void givenAVechile_WhenAlreadyParked_Should_ReturnFalse() {
         try {
             parkingLotSystem.park(vechile);
@@ -46,30 +32,6 @@ public class ParkingLotTest {
             Assertions.assertEquals("Parking Lot Is Full", e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    @Test
-    void givenAVechile_WhenNotParked_ShouldNotBeUnparked() {
-        try {
-            parkingLotSystem.unPark(vechile);
-            parkingLotSystem.isVechileUnParked(vechile);
-        } catch (ParkingLotException e) {
-            Assertions.assertEquals("Unpark Is Not Possible", e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    void givenParkingLot_WhenFull_ShouldReturnTrue() throws ParkingLotException {
-        parkingLotSystem.park(vechile);
-        boolean check = parkingLotSystem.isFull();
-        Assertions.assertTrue(check);
-    }
-
-    @Test
-    void givenParkingLot_WhenNotFull_ShouldReturnFalse() throws ParkingLotException {
-        boolean check = parkingLotSystem.isFull();
-        Assertions.assertFalse(check);
     }
 
     @Test
@@ -82,6 +44,20 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {        }
         boolean capacityFull = owner.isCapacityFull();
         Assertions.assertTrue(capacityFull);
+    }
+
+    @Test
+    public void givenCapacityIs2_ShouldAbleToPark2Vehicles(){
+        Object vehicle2 = new Object();
+        parkingLotSystem.setCapacity(2);
+        try {
+            parkingLotSystem.park(vechile);
+            parkingLotSystem.park(vehicle2);
+            boolean isparked1 = parkingLotSystem.isVechileParked(vechile);
+            boolean isparked2 = parkingLotSystem.isVechileParked(vehicle2);
+            Assertions.assertTrue(isparked1 && isparked2);
+        } catch (ParkingLotException e) {        }
+
     }
 }
 

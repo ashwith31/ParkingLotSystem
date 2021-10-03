@@ -1,13 +1,14 @@
 package com.parkinglotsystem;
 
+import java.util.*;
+
 public class ParkingLotSystem {
     private int actualCapacity;
-    private int currentCapacity;
-    private Object vechile;
+    private List vehicles;
     private ParkingLotOwner owner;
 
     public ParkingLotSystem(int capacity) {
-        this.currentCapacity = 0;
+        this.vehicles = new ArrayList();
         this.actualCapacity = capacity;
     }
 
@@ -20,32 +21,25 @@ public class ParkingLotSystem {
     }
 
     public void park(Object vechile) throws ParkingLotException {
-        if (this.currentCapacity == this.actualCapacity) {
+        if (this.vehicles.size() == this.actualCapacity) {
             owner.capacityIsFull();
             throw new ParkingLotException("Parking Lot Is Full");
         }
-        this.currentCapacity++;
-        this.vechile = vechile;
+        if(isVechileParked(vechile))
+            throw new ParkingLotException("Vehicle Already Parked");
+        this.vehicles.add(vechile);
     }
 
     public boolean isVechileParked(Object vechile) {
-        return this.vechile.equals(vechile);
+        return this.vehicles.contains(vechile);
     }
 
     public boolean unPark(Object vechile) throws ParkingLotException {
-        if (this.vechile == null) return false;
-        if (this.vechile.equals(vechile)) {
-            this.vechile = null;
+        if (vechile == null) return false;
+        if (this.vehicles.contains(vechile)) {
+            this.vehicles.remove(vechile);
             return true;
         }
         return false;
-    }
-
-    public boolean isVechileUnParked(Object vechile) {
-        return this.vechile == null;
-    }
-
-    public boolean isFull() {
-        return this.vechile != null;
     }
 }
