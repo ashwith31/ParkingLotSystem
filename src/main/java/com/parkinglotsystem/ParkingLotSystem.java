@@ -5,29 +5,27 @@ import java.util.*;
 public class ParkingLotSystem {
     private int actualCapacity;
     private List vehicles;
-    private ParkingLotOwner owner;
-    private AirportSecutity security;
+    private List<ParkingLotObserver> observers;
 
     public ParkingLotSystem(int capacity) {
+        this.observers = new ArrayList<>();
         this.vehicles = new ArrayList();
         this.actualCapacity = capacity;
     }
 
-    public void registerOwner(ParkingLotOwner owner) {
-        this.owner = owner;
+    public void registerParkingLotObserver(ParkingLotObserver observer) {
+        this.observers.add(observer);
     }
 
-    public void registerSecurity(AirportSecutity airportSecutity) {
-        this.security = airportSecutity;
-    }
     public void setCapacity(int capacity) {
         this.actualCapacity = capacity;
     }
 
     public void park(Object vechile) throws ParkingLotException {
         if (this.vehicles.size() == this.actualCapacity) {
-            owner.capacityIsFull();
-            security.capacityIsFull();
+            for (ParkingLotObserver observer: observers) {
+                observer.capacityIsFull();
+            }
             throw new ParkingLotException("Parking Lot Is Full");
         }
         if(isVechileParked(vechile))

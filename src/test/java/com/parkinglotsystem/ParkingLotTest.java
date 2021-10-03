@@ -37,7 +37,7 @@ public class ParkingLotTest {
     @Test
     void givenWhenParkingLotIsFull_ShouldInformTheOwner(){
         ParkingLotOwner owner = new ParkingLotOwner();
-        parkingLotSystem.registerOwner(owner);
+        parkingLotSystem.registerParkingLotObserver(owner);
         try {
             parkingLotSystem.park(vechile);
             parkingLotSystem.park(new Object());
@@ -62,10 +62,8 @@ public class ParkingLotTest {
 
     @Test
     void givenWhenParkingLotIsFull_ShouldInformTheSecurity(){
-        ParkingLotOwner owner = new ParkingLotOwner();
-        parkingLotSystem.registerOwner(owner);
         AirportSecutity airportSecutity = new AirportSecutity();
-        parkingLotSystem.registerSecurity(airportSecutity);
+        parkingLotSystem.registerParkingLotObserver(airportSecutity);
         try {
             parkingLotSystem.park(vechile);
             parkingLotSystem.park(new Object());
